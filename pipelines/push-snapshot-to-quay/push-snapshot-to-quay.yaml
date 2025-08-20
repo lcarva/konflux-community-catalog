@@ -10,7 +10,7 @@ spec:
     Tekton task to push snapshot images to quay.io using `cosign copy`. The destination for
     each image is taken from the '.spec.data.mapping' section of the release plan, in the form
     '.spec.data.mapping.components.repository', and '.spec.data.mapping.components.tags'.
-    
+
     If `requireSuccessfulManagedRelease` is "true", the snapshot will only be pushed if it
     contains a status indicating that a managed pipeline has successfully completed.
 
@@ -42,6 +42,10 @@ spec:
       description: If true, skip copying attestations and signatures
       type: string
       default: "false"
+    - name: singleComponent
+      description: If true, enable single component mode
+      type: string
+      default: "false"
   tasks:
     - name: push-snapshot-to-quay
       taskRef:
@@ -64,3 +68,5 @@ spec:
           value: $(params.requireSuccessfulManagedRelease)
         - name: skipAttestations
           value: $(params.skipAttestations)
+        - name: singleComponent
+          value: $(params.singleComponent)
